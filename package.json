@@ -1,0 +1,23 @@
+{
+  "name": "fd2022-2-sql-04-04-23",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sntjulls/fd2022-2-sql-04-04-23.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sntjulls/fd2022-2-sql-04-04-23/issues"
+  },
+  "homepage": "https://github.com/sntjulls/fd2022-2-sql-04-04-23#readme",
+  "dependencies": {
+    "pg": "^8.10.0"
+  }
+}
