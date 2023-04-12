@@ -5,8 +5,8 @@
             "server": "localhost",
             "port": 5432,
             "driver": "PostgreSQL",
-            "name": "fd_test",
-            "database": "fd_test",
+            "name": "hw_040423",
+            "database": "hw_040423",
             "username": "postgres",
             "password": "postgres"
         },
@@ -15,8 +15,8 @@
             "server": "localhost",
             "port": 5432,
             "driver": "PostgreSQL",
-            "name": "hw_040423",
-            "database": "hw_040423",
+            "name": "fd_test",
+            "database": "fd_test",
             "username": "postgres",
             "password": "postgres"
         }

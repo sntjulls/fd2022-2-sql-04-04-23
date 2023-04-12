@@ -1,28 +1,69 @@
-async function f1() {
-  return 7;
-}
-
-function f2() {
-  return Promise.resolve(8);
-}
-
-// const test1 = f1();
-
-// f1().then((data) => console.log(data));
-// f2().then((data) => console.log(data));
-
-const f3 = async () => {
-  try {
-    const res = await fetch();
-    const data = await res.json();
-  } catch (error) {
-    console.log(error);
-  }
+const { Client } = require("pg");
+const config = {
+  host: "localhost",
+  port: 5432,
+  database: "fd_test",
+  user: "postgres",
+  password: "postgres",
 };
 
-fetch()
-  .then((res) => res.json())
-  .then((data) => data)
-  .catch((err) => err);
+const loadUsers = async () => {
+  const res = await fetch(
+    "https://randomuser.me/api/?results=100&seed=fdpg&nat=gb&page=6"
+  );
+  const data = await res.json();
+  return data.results;
+};
 
-// await fetch(); Error!
+// const users = [
+//   {
+//     firstName: "Brad",
+//     lastName: "Pitt",
+//     email: "pitt741@gmail.com",
+//     isMale: true,
+//     birthday: "1963-12-18",
+//     height: 1.87,
+//   },
+//   {
+//     firstName: "Alex",
+//     lastName: "Trump",
+//     email: "alex@gmail.com",
+//     isMale: false,
+//     birthday: "1993-12-18",
+//     height: 1.57,
+//   },
+//   {
+//     firstName: "Mary",
+//     lastName: "Poppins",
+//     email: "mary@gmail.com",
+//     isMale: false,
+//     birthday: "2003-12-18",
+//     height: 1.67,
+//   },
+// ];
+
+const mapUsers = (users) => {
+  return users
+    .map(
+      ({ name: { first, last }, email, gender, dob: { date } }) =>
+        `('${first}', '${last}', '${email}', '${
+          gender === "male"
+        }', '${date}', '${(Math.random() + 1.2).toFixed(2)}')`
+    )
+    .join(",");
+};
+// console.log(mapUsers(users));
+
+const client = new Client(config);
+start();
+
+async function start() {
+  await client.connect();
+  const users = await loadUsers();
+  const res = await client.query(`
+INSERT INTO "users"("firstName", "lastName", "email", "isMale", "birthday", "height")
+VALUES ${mapUsers(users)};
+`);
+  console.log(res);
+  await client.end();
+}
